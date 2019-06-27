@@ -21,6 +21,15 @@ dependencies {
 ```
 [![](https://jitpack.io/v/software.rsquared/data-bound-list-adapter.svg)](https://jitpack.io/#software.rsquared/data-bound-list-adapter)
 
+Becasue this library is based on data binding library remember enabling it in your app
+```Gradle
+android {
+    ...
+    dataBinding {
+        enabled true
+    }   
+}
+```
 
 ## What's inside?
 _todo description_
