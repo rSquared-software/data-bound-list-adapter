@@ -1,5 +1,5 @@
 # DataBoundListAdapter
-_todo description_
+Kotlin + DataBinding + RecyclerView.Adapter = <3
 
 ## Gradle Dependency (jitpack.io)
 

@@ -8,7 +8,7 @@ import rsquared.software.recyclerview.DataBoundListAdapter
 /**
  * @author rSquared.software
  */
-class AssigmentAdapter : DataBoundListAdapter<Assignment>(diffUtil) {
+class AssignmentAdapter : DataBoundListAdapter<Assignment>(diffUtil) {
 
     override fun getItemViewType(position: Int): Int {
         return R.layout.item_assigment
@@ -17,8 +17,10 @@ class AssigmentAdapter : DataBoundListAdapter<Assignment>(diffUtil) {
     override fun bind(binding: ViewDataBinding, item: Assignment?, position: Int) {
         when (binding) {
             is ItemAssigmentBinding -> {
-                binding.icon.setImageResource(item?.iconRes ?: R.drawable.ic_do_not_disturb_alt_black_24dp)
-                binding.textContent.text = item?.text ?: "Missing"
+                binding.item = item
+                //or in more old fashioned way set
+//                binding.icon.setImageResource(item?.iconRes ?: R.drawable.ic_do_not_disturb_alt_black_24dp)
+//                binding.textContent.text = item?.text ?: "Missing"
             }
         }
     }
