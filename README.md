@@ -13,15 +13,8 @@ allprojects {
 }
 ```
 
+Because this library is based on data binding library remember enabling it in your project.
 app _build.gradle_
-```Gradle
-dependencies {
-    implementation 'software.rsquared:data-bound-list-adapter:1.0.0'
-}
-```
-[![](https://jitpack.io/v/software.rsquared/data-bound-list-adapter.svg)](https://jitpack.io/#software.rsquared/data-bound-list-adapter)
-
-Becasue this library is based on data binding library remember enabling it in your project
 ```Gradle
 android {
     ...
@@ -29,7 +22,11 @@ android {
         enabled true
     }   
 }
+dependencies {
+    implementation 'software.rsquared:data-bound-list-adapter:1.0.0'
+}
 ```
+[![](https://jitpack.io/v/software.rsquared/data-bound-list-adapter.svg)](https://jitpack.io/#software.rsquared/data-bound-list-adapter)
 
 ## What's inside?
 _todo description_
