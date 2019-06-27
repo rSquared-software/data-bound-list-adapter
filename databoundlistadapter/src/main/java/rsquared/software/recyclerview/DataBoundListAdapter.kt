@@ -13,12 +13,27 @@ import androidx.recyclerview.widget.ListAdapter
 abstract class DataBoundListAdapter<T>(diffCallback: DiffUtil.ItemCallback<T>) :
     ListAdapter<T, DataBoundViewHolder<ViewDataBinding>>(diffCallback) {
 
-    final override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataBoundViewHolder<ViewDataBinding> {
+    final override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): DataBoundViewHolder<ViewDataBinding> {
         return DataBoundViewHolder(createBinding(parent, viewType))
     }
 
-    final override fun onBindViewHolder(holder: DataBoundViewHolder<ViewDataBinding>, position: Int) {
+    final override fun onBindViewHolder(
+        holder: DataBoundViewHolder<ViewDataBinding>,
+        position: Int
+    ) {
         bind(holder.binding, getItem(position), position)
+        holder.binding.executePendingBindings()
+    }
+
+    final override fun onBindViewHolder(
+        holder: DataBoundViewHolder<ViewDataBinding>,
+        position: Int,
+        payloads: MutableList<Any>
+    ) {
+        bind(holder.binding, getItem(position), position, payloads)
         holder.binding.executePendingBindings()
     }
 
@@ -27,4 +42,13 @@ abstract class DataBoundListAdapter<T>(diffCallback: DiffUtil.ItemCallback<T>) :
     }
 
     abstract fun bind(binding: ViewDataBinding, item: T?, position: Int)
+
+    protected open fun bind(
+        binding: ViewDataBinding,
+        item: T?,
+        position: Int,
+        payloads: MutableList<Any>
+    ) {
+        bind(binding, item, position)
+    }
 }
