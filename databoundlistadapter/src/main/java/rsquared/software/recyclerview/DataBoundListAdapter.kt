@@ -37,6 +37,8 @@ abstract class DataBoundListAdapter<T>(diffCallback: DiffUtil.ItemCallback<T>) :
         holder.binding.executePendingBindings()
     }
 
+
+
     open fun createBinding(parent: ViewGroup, viewType: Int): ViewDataBinding {
         return DataBindingUtil.inflate(LayoutInflater.from(parent.context), viewType, parent, false)
     }

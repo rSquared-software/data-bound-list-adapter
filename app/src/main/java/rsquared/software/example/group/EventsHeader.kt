@@ -1,8 +1,14 @@
 package rsquared.software.example.group
 
 import androidx.databinding.ObservableBoolean
-import rsquared.software.recyclerview.Expandable
+import rsquared.software.recyclerview.grouplist.GroupParent
 
-class EventsHeader(override val id: Long, groupId: Long, name: String) : Event(groupId, name), Expandable {
+class EventsHeader(
+    id: Long,
+    parentId: Long = 0L,
+    name: String,
+    override val groupId: Long = 0L
+) :
+    Event(id, parentId, name), GroupParent {
     override val expanded: ObservableBoolean = ObservableBoolean()
 }

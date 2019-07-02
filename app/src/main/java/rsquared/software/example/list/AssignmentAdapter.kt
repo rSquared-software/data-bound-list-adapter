@@ -1,8 +1,9 @@
-package rsquared.software.example
+package rsquared.software.example.list
 
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.DiffUtil
-import rsquared.software.example.databinding.ItemAssigmentBinding
+import rsquared.software.example.R
+import rsquared.software.example.databinding.ItemAssignmentBinding
 import rsquared.software.recyclerview.DataBoundListAdapter
 
 /**
@@ -11,12 +12,12 @@ import rsquared.software.recyclerview.DataBoundListAdapter
 class AssignmentAdapter : DataBoundListAdapter<Assignment>(diffUtil) {
 
     override fun getItemViewType(position: Int): Int {
-        return R.layout.item_assigment
+        return R.layout.item_assignment
     }
 
     override fun bind(binding: ViewDataBinding, item: Assignment?, position: Int) {
         when (binding) {
-            is ItemAssigmentBinding -> {
+            is ItemAssignmentBinding -> {
                 binding.item = item
                 //or in more old fashioned way set data to each view
 //                binding.icon.setImageResource(item?.iconRes ?: R.drawable.ic_do_not_disturb_alt_black_24dp)

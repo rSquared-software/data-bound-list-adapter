@@ -13,7 +13,7 @@ fun ImageView.bindIconRes(res: Int?) {
 }
 
 @BindingAdapter("toggleableBoolean")
-fun View.bindtoggleBoolean(target: ObservableBoolean?) {
+fun View.bindToggleBoolean(target: ObservableBoolean?) {
     if (target == null) {
         setOnClickListener(null)
     } else {

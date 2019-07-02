@@ -1,18 +1,18 @@
 package rsquared.software.example.group
 
+import android.view.View
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.DiffUtil
 import rsquared.software.example.R
 import rsquared.software.example.databinding.ItemEventBinding
 import rsquared.software.example.databinding.ItemEventsHeaderBinding
-import rsquared.software.recyclerview.DataBoundGroupAdapter
-import rsquared.software.recyclerview.Expandable
+import rsquared.software.recyclerview.grouplist.DataBoundGroupAdapter
 
-class GroupAdapter : DataBoundGroupAdapter<Event>(diffUtil) {
+class GroupAdapter : DataBoundGroupAdapter<Event>(diffUtil, false) {
 
     override fun getItemViewType(position: Int): Int {
         return when (getItem(position)) {
-            is Expandable -> R.layout.item_events_header
+            is EventsHeader -> R.layout.item_events_header
             else -> R.layout.item_event
         }
     }
@@ -20,7 +20,12 @@ class GroupAdapter : DataBoundGroupAdapter<Event>(diffUtil) {
     override fun bind(binding: ViewDataBinding, item: Event?, position: Int) {
         when (binding) {
             is ItemEventBinding -> binding.item = item
-            is ItemEventsHeaderBinding -> binding.header = item as? EventsHeader
+            is ItemEventsHeaderBinding -> {
+                binding.header = item as? EventsHeader
+                binding.nah.visibility =
+                    if (binding.header?.parentId == 0L) View.GONE else View.INVISIBLE
+
+            }
         }
     }
 
