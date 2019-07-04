@@ -7,8 +7,6 @@ import rsquared.software.example.R
 import rsquared.software.example.databinding.ItemEventBinding
 import rsquared.software.example.databinding.ItemEventsHeaderBinding
 import rsquared.software.recyclerview.grouplist.DataBoundGroupAdapter
-import software.rsquared.logextensions.logInfo
-import software.rsquared.logextensions.logVerbose
 
 class GroupAdapter : DataBoundGroupAdapter<Event>(diffUtil, false) {
 
@@ -34,16 +32,10 @@ class GroupAdapter : DataBoundGroupAdapter<Event>(diffUtil, false) {
         val diffUtil = object : DiffUtil.ItemCallback<Event>() {
 
             override fun areItemsTheSame(oldItem: Event, newItem: Event): Boolean {
-                logVerbose("areItemsTheSame ${oldItem.id == newItem.id} <- [$oldItem, $newItem]")
-                return /*oldItem === newItem &&*/ oldItem.id == newItem.id
+                return oldItem.id == newItem.id
             }
 
-
             override fun areContentsTheSame(oldItem: Event, newItem: Event): Boolean {
-//                if(oldItem is EventsHeader && newItem is EventsHeader){
-//                    return oldItem == newItem && oldItem.expanded === newItem.expanded
-//                }
-                logInfo("areContentsTheSame ${oldItem == newItem} <- [$oldItem, $newItem]")
                 return oldItem == newItem
             }
         }

@@ -3,7 +3,6 @@ package rsquared.software.example.group
 import androidx.databinding.ObservableBoolean
 import rsquared.software.recyclerview.grouplist.ExpandCallback
 import rsquared.software.recyclerview.grouplist.GroupParent
-import rsquared.software.recyclerview.grouplist.Toggle
 
 class EventsHeader(
     id: Long,
@@ -15,10 +14,10 @@ class EventsHeader(
 
     val observableExpanded = ObservableBoolean(false)
 
-    override var expanded: Toggle = Toggle(false)
+    override var expanded: Boolean = false
         set(value) {
             field = value
-            observableExpanded.set(value.value)
+            observableExpanded.set(value)
         }
     override var callback: ExpandCallback? = null
 

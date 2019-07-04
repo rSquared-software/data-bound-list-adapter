@@ -14,7 +14,7 @@ abstract class DataBoundGroupAdapter<T : GroupItem>(
     protected open val visibleGroups = mutableSetOf<Long>()
 
     override fun toggleGroup(target: GroupParent) {
-        target.expanded = target.expanded.switch()
+        target.expanded = !target.expanded
         onExpandedChanged()
     }
 
@@ -30,9 +30,9 @@ abstract class DataBoundGroupAdapter<T : GroupItem>(
         submitted.forEach {
             if (it is GroupParent) {
                 if (notEmptyAdapter)
-                    it.expanded = Toggle(visibleGroups.contains(it.groupId))
+                    it.expanded = visibleGroups.contains(it.groupId)
                 else
-                    it.expanded = Toggle(false)
+                    it.expanded = false
                 it.callback = this
             }
         }
@@ -48,11 +48,11 @@ abstract class DataBoundGroupAdapter<T : GroupItem>(
                 is GroupParent ->
                     if ((gItem.parentId == 0L || visibleGroups.contains(gItem.parentId))) {
                         itemVisibility.add(gItem.id)
-                        if (gItem.expanded.isOn) {
+                        if (gItem.expanded) {
                             visibleGroups.add(gItem.groupId)
                         }
                     } else if (foldChildrenOnFold) {
-                        gItem.expanded = Toggle(false)
+                        gItem.expanded = false
                     }
                 else ->
                     if (gItem.parentId == 0L || visibleGroups.contains(gItem.parentId))
