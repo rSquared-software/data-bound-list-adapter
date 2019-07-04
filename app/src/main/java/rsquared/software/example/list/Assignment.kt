@@ -1,4 +1,4 @@
-package rsquared.software.example
+package rsquared.software.example.list
 
 /**
  * @author rSquared.software

@@ -1,24 +1,25 @@
 package rsquared.software.example
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import rsquared.software.example.group.GroupActivity
+import rsquared.software.example.list.ListActivity
 
 class MainActivity : AppCompatActivity() {
-    private val assignmentsAdapter = AssignmentAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        recycler_list.adapter = assignmentsAdapter
+        list_button.setOnClickListener {
+            startActivity(Intent(this, ListActivity::class.java))
+        }
 
-        assignmentsAdapter.submitList(
-            listOf(
-                Assignment(R.drawable.ic_assignment_black_24dp, "Get haircut"),
-                Assignment(R.drawable.ic_assignment_late_black_24dp, "Overdue payment!"),
-                Assignment(R.drawable.ic_assignment_turned_in_black_24dp, "Fall in love with Kotlin")
-            )
-        )
+        group_button.setOnClickListener {
+            startActivity(Intent(this, GroupActivity::class.java))
+        }
     }
+
 }
