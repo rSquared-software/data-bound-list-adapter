@@ -9,6 +9,7 @@ import rsquared.software.example.R
 class GroupActivity : AppCompatActivity() {
 
     private val groupAdapter = GroupAdapter()
+//    private var i = 0
     private lateinit var viewModel: GroupViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,5 +20,15 @@ class GroupActivity : AppCompatActivity() {
 
         recycler_list.adapter = groupAdapter
         groupAdapter.submitList(viewModel.eventList)
+        resubmit.setOnClickListener {
+            groupAdapter.submitList(viewModel.getTheOther())
+//            groupAdapter.submitList(i.let {
+//                if (it == 0) {
+//                    viewModel.eventListCopy
+//                } else {
+//                    viewModel.eventList
+//                }
+//            })
+        }
     }
 }

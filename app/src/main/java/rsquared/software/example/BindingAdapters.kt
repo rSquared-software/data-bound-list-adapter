@@ -4,10 +4,8 @@ import android.graphics.drawable.Animatable
 import android.graphics.drawable.Animatable2
 import android.graphics.drawable.Drawable
 import android.os.Build
-import android.view.View
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
-import androidx.databinding.ObservableBoolean
 import software.rsquared.logextensions.logWarning
 
 @BindingAdapter("iconRes")
@@ -15,17 +13,6 @@ fun ImageView.bindIconRes(res: Int?) {
     res?.also {
         setImageResource(res)
     } ?: setImageDrawable(null)
-}
-
-@BindingAdapter("onClickToggle")
-fun View.bindOnClickToggleBoolean(target: ObservableBoolean?) {
-    if (target == null) {
-        setOnClickListener(null)
-    } else {
-        setOnClickListener {
-            target.set(!target.get())
-        }
-    }
 }
 
 @BindingAdapter("animateTrue", "animateFalse", "animateTrigger")

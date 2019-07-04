@@ -1,71 +1,72 @@
 package rsquared.software.recyclerview.grouplist
 
-import androidx.databinding.Observable
 import androidx.recyclerview.widget.DiffUtil
 import rsquared.software.recyclerview.DataBoundListAdapter
 
 abstract class DataBoundGroupAdapter<T : GroupItem>(
     diffCallback: DiffUtil.ItemCallback<T>,
-    var foldChildrenOnFold: Boolean
+    open var foldChildrenOnFold: Boolean
 ) :
-    DataBoundListAdapter<T>(diffCallback) {
+    DataBoundListAdapter<T>(diffCallback), ExpandCallback {
 
-    private var submitted: List<T> = emptyList()
-    private val itemVisibility: MutableSet<Long> = mutableSetOf()
-    private val visibleGroups = mutableSetOf<Long>()
+    protected open var submitted: List<T> = emptyList()
+    protected open val itemVisibility = mutableSetOf<Long>()
+    protected open val visibleGroups = mutableSetOf<Long>()
 
-    private val booleanObserver = object : Observable.OnPropertyChangedCallback() {
-        override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
-            onExpandedChanged()
-        }
+    override fun toggleGroup(target: GroupParent) {
+        target.expanded = target.expanded.switch()
+        onExpandedChanged()
     }
 
     override fun submitList(list: List<T>?) {
+        val notEmptyAdapter = submitted.isNotEmpty()
         if (list.isNullOrEmpty())
             submitted.forEach {
-                if (it is GroupParent)
-                    it.expanded.removeOnPropertyChangedCallback(booleanObserver)
+                if (it is GroupParent) {
+                    it.callback = null
+                }
             }
-
         submitted = list ?: emptyList()
         submitted.forEach {
             if (it is GroupParent) {
-                it.expanded.addOnPropertyChangedCallback(booleanObserver)
+                if (notEmptyAdapter)
+                    it.expanded = Toggle(visibleGroups.contains(it.groupId))
+                else
+                    it.expanded = Toggle(false)
+                it.callback = this
             }
         }
         updateGroupMap()
-
         super.submitList(applyExpansions())
     }
 
-    private fun updateGroupMap() {
+    protected open fun updateGroupMap() {
         itemVisibility.clear()
         visibleGroups.clear()
-        submitted.forEach {
-            when (it) {
+        submitted.forEach { gItem ->
+            when (gItem) {
                 is GroupParent ->
-                    if ((it.parentId == 0L || visibleGroups.contains(it.parentId))) {
-                        itemVisibility.add(it.id)
-                        if (it.expanded.get())
-                            visibleGroups.add(it.groupId)
-                    } else if (foldChildrenOnFold)
-                        it.expanded.set(false)
+                    if ((gItem.parentId == 0L || visibleGroups.contains(gItem.parentId))) {
+                        itemVisibility.add(gItem.id)
+                        if (gItem.expanded.isOn) {
+                            visibleGroups.add(gItem.groupId)
+                        }
+                    } else if (foldChildrenOnFold) {
+                        gItem.expanded = Toggle(false)
+                    }
                 else ->
-                    if (it.parentId == 0L || visibleGroups.contains(it.parentId))
-                        itemVisibility.add(it.id)
+                    if (gItem.parentId == 0L || visibleGroups.contains(gItem.parentId))
+                        itemVisibility.add(gItem.id)
 
             }
         }
     }
 
-    private fun applyExpansions(): List<T> =
+    protected open fun applyExpansions(): List<T> =
         submitted.filter { itemVisibility.contains(it.id) }
 
-
-    private fun onExpandedChanged() {
+    protected open fun onExpandedChanged() {
         updateGroupMap()
         super.submitList(applyExpansions())
     }
-
-    inner class Helper(val boolean: Boolean)
 }

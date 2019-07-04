@@ -14,9 +14,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:animateLayoutChanges="true"
+        android:onClick="@{() -> header.tryCallback()}"
         android:orientation="horizontal"
-        android:paddingTop="16dp"
-        binding:onClickToggle="@{header.expanded}">
+        android:paddingTop="16dp">
 
         <ImageView
             android:id="@+id/nah"
@@ -47,7 +47,7 @@
             android:padding="4dp"
             android:src="@drawable/avd_arrow_down_up"
             binding:animateFalse="@{@drawable/avd_arrow_up_down}"
-            binding:animateTrigger="@{header.expanded}"
+            binding:animateTrigger="@{header.observableExpanded}"
             binding:animateTrue="@{@drawable/avd_arrow_down_up}" />
 
     </LinearLayout>
